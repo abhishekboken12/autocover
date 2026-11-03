@@ -1,7 +1,7 @@
 
 from datetime import date
 from typing import Optional
-
+from app.core.init_db import create_tables
 from fastapi import FastAPI, HTTPException, Query
 
 from app.services.quote_aggregator import (
@@ -71,3 +71,7 @@ def get_quotes(
             status_code=404,
             detail=str(exc),
         )
+
+@app.on_event("startup")
+def startup_event():
+    create_tables()
