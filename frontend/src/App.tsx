@@ -3,6 +3,9 @@ import { useState } from 'react'
 import type { FormEvent } from 'react'
 import './App.css'
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || ''
+
+
 // Vehicle information returned by FastAPI
 interface Vehicle {
   registration_number: string
@@ -114,7 +117,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `/api/vehicles/${encodeURIComponent(reg)}`
+        `${API_BASE_URL}/api/vehicles/${encodeURIComponent(reg)}`
       )
 
       const data = await response.json()
@@ -147,9 +150,9 @@ function App() {
     setSelectionError('')
 
     try {
-      const response = await fetch(
-        `/api/quotes/${encodeURIComponent(vehicle.registration_number)}`
-      )
+    const response = await fetch(
+      `${API_BASE_URL}/api/quotes/${encodeURIComponent(vehicle.registration_number)}`
+    )
 
       const data = await response.json()
 
@@ -186,7 +189,7 @@ function App() {
     setSelectionError('')
 
     try {
-      const response = await fetch('/api/selections', {
+      const response = await fetch(`${API_BASE_URL}/api/selections`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
